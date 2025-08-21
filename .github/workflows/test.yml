@@ -6,6 +6,20 @@ on:
   pull_request:
     branches: [ main ]
   workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment to test against'
+        required: false
+        default: 'STAGE'
+        type: choice
+        options:
+          - STAGE
+          - PROD
+      test_path:
+        description: 'Test path (optional)'
+        required: false
+        default: 'tests/'
+        type: string
 
 permissions:
   checks: write
@@ -59,10 +73,10 @@ jobs:
         run: |
           mkdir -p test-results
           docker run --rm \
-            -e ENV=STAGE \
+            -e ENV=${{ github.event.inputs.environment || 'STAGE' }} \
             -v $(pwd)/test-results:/hackernews-api-test/test-results \
             ${{ env.DOCKER_IMAGE }} \
-            pytest tests/ \
+            pytest ${{ github.event.inputs.test_path || 'tests/' }} \
               --junitxml=test-results/junit_report.xml \
               --tb=short \
               -v

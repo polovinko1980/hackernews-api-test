@@ -97,6 +97,16 @@ Workflow triggers:
 - Pull requests to `main`
 - Manual execution via `workflow_dispatch`
 
+### Manual Workflow Execution
+To trigger the workflow manually:
+1. Go to **Actions** tab in your GitHub repository
+2. Select **"HackerNews API Tests"** workflow
+3. Click **"Run workflow"** button
+4. Choose options:
+   - **Environment**: STAGE (default) or PROD
+   - **Test path**: `tests/` (default), `tests/top_stories/`, or `tests/comments/`
+5. Click **"Run workflow"**
+
 ## Test Framework Features
 
 - **Fixtures**: Pre-configured API client across all tests
