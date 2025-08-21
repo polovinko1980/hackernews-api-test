@@ -98,7 +98,7 @@ jobs:
           virtualenvs-in-project: true
 
       - name: Install dependencies
-        run: poetry install --with dev
+        run: poetry install --with dev --no-root
 
       - name: Run Black formatter check
         run: poetry run black --check .
