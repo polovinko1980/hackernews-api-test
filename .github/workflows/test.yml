@@ -7,6 +7,10 @@ on:
     branches: [ main ]
   workflow_dispatch:
 
+permissions:
+  checks: write
+  contents: read
+
 env:
   DOCKER_IMAGE: hackernews-api-test
 
@@ -77,27 +81,30 @@ jobs:
 
   lint:
     runs-on: ubuntu-latest
-    needs: build
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Download Docker image artifact
-        uses: actions/download-artifact@v4
+      - name: Set up Python
+        uses: actions/setup-python@v4
         with:
-          name: docker-image
+          python-version: '3.11'
 
-      - name: Load Docker image
-        run: |
-          docker load < hackernews-api-test.tar.gz
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+        with:
+          version: latest
+          virtualenvs-create: true
+          virtualenvs-in-project: true
+
+      - name: Install dependencies
+        run: poetry install --with dev
 
       - name: Run Black formatter check
-        run: |
-          docker run --rm ${{ env.DOCKER_IMAGE }} poetry run black --check .
+        run: poetry run black --check .
 
       - name: Run Ruff linter
-        run: |
-          docker run --rm ${{ env.DOCKER_IMAGE }} poetry run ruff check .
+        run: poetry run ruff check .
 
   publish_report:
     runs-on: ubuntu-latest

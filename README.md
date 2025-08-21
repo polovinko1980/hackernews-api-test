@@ -84,16 +84,6 @@ poetry run ruff check .
 poetry run ruff check . --fix
 ```
 
-### With Docker
-
-```bash
-# Format code
-docker run --rm hackernews-api-test poetry run black .
-
-# Run linter
-docker run --rm hackernews-api-test poetry run ruff check .
-```
-
 ## CI/CD
 
 The project includes GitHub Actions workflow that automatically:
