@@ -86,12 +86,11 @@ poetry run ruff check . --fix
 
 ## CI/CD
 
-The project includes GitHub Actions workflow that automatically:
+The project includes GitHub Actions workflow with sequential execution:
 
-- **Builds** Docker image
-- **Tests** against PROD and STAGE environments
-- **Lints** code with Black and Ruff
-- **Publishes** JUnit test reports
+1. **Lint** - Checks code quality with Black and Ruff
+2. **Test** - Builds Docker image and runs tests (STAGE environment)
+3. **Publish Report** - Generates JUnit test report
 
 Workflow triggers:
 - Push to `main` or `develop` branches
@@ -100,7 +99,7 @@ Workflow triggers:
 
 ## Test Framework Features
 
-- **Fixtures**: Pre-configured API clients and test data available across all tests
+- **Fixtures**: Pre-configured API client across all tests
 - **Tunable API Client**: Environment-based configuration with automatic timeouts and retries
 - **Schema Validation**: Pydantic models for type-safe response validation
 - **Comprehensive Coverage**: API contract, functional, and negative testing
