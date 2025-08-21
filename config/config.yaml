@@ -1,0 +1,9 @@
+PROD:
+  base_url: "https://hacker-news.firebaseio.com/v0/"
+  timeout: 10.0
+  max_retries: 3
+  
+STAGE:
+  base_url: "https://hacker-news.firebaseio.com/v0/"
+  timeout: 15.0
+  max_retries: 5
